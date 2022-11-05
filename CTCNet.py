@@ -98,9 +98,9 @@ class FeatureFusion(nn.Module):
 
         return x
 
-class FAMBlock(nn.Module):
+class RPMBlock(nn.Module):
     def __init__(self, channels):
-        super(FAMBlock, self).__init__()
+        super(RPMBlock, self).__init__()
 
         self.conv3 = nn.Conv2d(in_channels=channels, out_channels=channels, kernel_size=3, padding=1)
         self.conv1 = nn.Conv2d(in_channels=channels, out_channels=channels, kernel_size=1)
@@ -173,12 +173,12 @@ class CTCNet(nn.Module):
         self.fusion2 = FeatureFusion(in_channel=128 + size, out_channel=128)
         self.fusion3 = FeatureFusion(in_channel=256 + size, out_channel=256)
 
-        self.FAMBlock1 = FAMBlock(channels=64)
-        self.FAMBlock2 = FAMBlock(channels=128)
-        self.FAMBlock3 = FAMBlock(channels=256)
-        self.FAM1 = nn.ModuleList([self.FAMBlock1 for i in range(6)])
-        self.FAM2 = nn.ModuleList([self.FAMBlock2 for i in range(4)])
-        self.FAM3 = nn.ModuleList([self.FAMBlock3 for i in range(2)])
+        self.RPMBlock1 = RPMBlock(channels=64)
+        self.RPMBlock2 = RPMBlock(channels=128)
+        self.RPMBlock3 = RPMBlock(channels=256)
+        self.FAM1 = nn.ModuleList([self.RPMBlock1 for i in range(6)])
+        self.FAM2 = nn.ModuleList([self.RPMBlock2 for i in range(4)])
+        self.FAM3 = nn.ModuleList([self.RPMBlock3 for i in range(2)])
 
         filters = [64, 128, 256, 512]
         self.decoder4 = DecoderBottleneckLayer(filters[3], filters[2])
