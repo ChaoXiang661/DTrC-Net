@@ -69,3 +69,6 @@ def deit_tiny_distilled_patch16_256(pretrained=True,**kwargs):
         model.load_state_dict(ckpt['model'], strict=False)
     model.default_cfg = _cfg()
     return model
+
+
+## Specifically, the images in the ImageNet 2012 dataset ( Russakovsky et al., 2015 ) were resized to 256 × 256 , which were divided into 256 patches with the resolution of 16 × 16 . 
