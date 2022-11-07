@@ -61,5 +61,8 @@ def deit_tiny_distilled_patch16_256(**kwargs):
     model = DistilledVisionTransformer(
         img_size=256, patch_size=16, embed_dim=256, depth=12, num_heads=8, mlp_ratio=4, qkv_bias=True,
         norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
+    if pretrained:
+        ckpt = torch.load('pretrained/deit_tiny_distilled_patch16_256.pth')
+        model.load_state_dict(ckpt['model'], strict=False)
     model.default_cfg = _cfg()
     return model
